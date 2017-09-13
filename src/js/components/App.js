@@ -16,20 +16,20 @@ const searchkit = new SearchkitManager("http://192.168.20.59:9200/rivo/", {
   basicAuth:"read:4ea8058e-4a28-e24e-0fb4-9c5cf86d6e97"
 });
 
-  const MovieHitsGridItem = (props)=> {
-    const {bemBlocks, result} = props
-    let url = "http://www.imdb.com/title/" + result._source.imdbId
-    const source = extend({}, result._source, result.highlight)
-    return (
-      <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
-        <a href={url} target="_blank">
-          <img data-qa="poster" alt="presentation" className={bemBlocks.item("poster")} src={result._source.poster} width="170" height="240"/>
-          <div data-qa="title" className={bemBlocks.item("title")} dangerouslySetInnerHTML={{__html:source.title}}>
-          </div>
-        </a>
-      </div>
-    );
-  };
+ // const MovieHitsGridItem = (props)=> {
+ //   const {bemBlocks, result} = props
+ //   let url = "http://www.imdb.com/title/" + result._source.imdbId
+ //   const source = extend({}, result._source, result.highlight)
+ //   return (
+ //     <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
+ //       <a href={url} target="_blank">
+ //         <img data-qa="poster" alt="presentation" className={bemBlocks.item("poster")} src={result._source.poster} width="170" height="240"/>
+ //         <div data-qa="title" className={bemBlocks.item("title")} dangerouslySetInnerHTML={{__html:source.title}}>
+ //         </div>
+ //       </a>
+ //     </div>
+ //   );
+ // };
   
   const MovieHitsListItem = (props)=> {
     const {bemBlocks, result} = props
@@ -65,7 +65,7 @@ const searchkit = new SearchkitManager("http://192.168.20.59:9200/rivo/", {
             <HierarchicalMenuFilter fields={["type.raw", "genres.raw"]} title="Categories" id="categories"/>
             <DynamicRangeFilter field="metaScore" id="metascore" title="Metascore" rangeFormatter={(count)=> count + "*"}/>
             <RangeFilter min={0} max={10} field="imdbRating" id="imdbRating" title="IMDB Rating" showHistogram={true}/>
-            <InputFilter id="writers" searchThrottleTime={500} title="Writers" placeholder="Search writers" searchOnChange={true} queryFields={["writers"]} />
+            <InputFilter id="accidents" searchThrottleTime={500} title="Accidents" placeholder="Search accidents" searchOnChange={true} queryFields={["accidents"]} />
             <RefinementListFilter id="actors" title="Actors" field="actors.raw" size={10}/>
             <RefinementListFilter translations={{"facets.view_more":"View more writers"}} id="writers" title="Writers" field="writers.raw" operator="OR" size={10}/>
             <RefinementListFilter id="countries" title="Countries" field="countries.raw" operator="OR" size={10}/>
@@ -98,11 +98,11 @@ const searchkit = new SearchkitManager("http://192.168.20.59:9200/rivo/", {
 
             </ActionBar>
             <ViewSwitcherHits
-                hitsPerPage={12} highlightFields={["title","plot"]}
-                sourceFilter={["plot", "title", "poster", "imdbId", "imdbRating", "year"]}
+                hitsPerPage={12} highlightFields={["CompanyName","LocationName"]}
+                sourceFilter={["CompanyName", "LocationName"]}
                 hitComponents={[
-                  {key:"grid", title:"Grid", itemComponent:MovieHitsGridItem, defaultOption:true},
-                  {key:"list", title:"List", itemComponent:MovieHitsListItem}
+                  //{key:"grid", title:"Grid", itemComponent:MovieHitsGridItem, defaultOption:true},
+                  {key:"list", title:"List", itemComponent:MovieHitsListItem, defaultOption:true}
                 ]}
                 scrollTo="body"
             />
